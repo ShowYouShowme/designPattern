@@ -1,5 +1,5 @@
 /** 抽象工厂模式用来创建一组相关的对象*/
-namespace abstractFactory
+namespace AbstractFactory
 {
     abstract class IButton
     {
@@ -89,7 +89,7 @@ namespace abstractFactory
 }
 
 /**工厂方法 */
-namespace factoryMethod
+namespace FactoryMethod
 {
     abstract class IMouse
     {
@@ -145,4 +145,52 @@ namespace factoryMethod
     }
 }
 
-factoryMethod.Client.main();
+/**把创建对象的代码段提取到factory类里面去 */
+namespace SimpleFactory
+{
+    abstract class IMouse
+    {
+
+    }
+
+    class DellMouse
+    {
+        constructor()
+        {
+            console.log("Hi, I am DellMouse"!);
+        }
+    }
+
+    class HpMouse
+    {
+        constructor()
+        {
+            console.log("Hi, i am HpMouse!");
+        }
+    }
+
+    class MouseFactory
+    {
+        public static creatMouse(type : string) : IMouse
+        {
+            if(type == "dell")
+            {
+                return new DellMouse();
+            }
+            else if(type == "hp")
+            {
+                return new HpMouse();
+            }
+        }
+    }
+    export class Client
+    {
+        public static main()
+        {
+            let hpMouse : IMouse = MouseFactory.creatMouse("hp");
+            let dellMouse : IMouse = MouseFactory.creatMouse("dell");
+        }
+    }
+}
+
+SimpleFactory.Client.main();
