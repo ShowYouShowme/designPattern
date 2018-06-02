@@ -100,4 +100,70 @@ namespace Adapter
     }
 }
 
-Adapter.Client.main();
+/**接口适配器 不希望实现全部接口*/
+namespace interfaceAdapter
+{
+    abstract class IPort
+    {
+        public abstract ssh() : void;
+        public abstract net() : void;
+        public abstract mysql() : void;
+        public abstract ftp() : void;
+    }
+
+    class Wrapper implements IPort
+    {
+        public ssh() : void{}
+        public net() : void{}
+        public mysql() : void{}
+        public ftp() : void{}
+    }
+
+    class Chat extends Wrapper
+    {
+        public net() : void
+        {
+            console.log("hello world!");
+        }
+
+        public ftp() : void
+        {
+            console.log("File upload succeddful!");
+        }
+    }
+
+    class Server extends Wrapper
+    {
+        public ssh() : void
+        {
+            console.log("connect success!");
+        }
+
+        public net() : void
+        {
+            console.log("hello www!!!");
+        }
+
+        public mysql() : void
+        {
+            console.log("mysql is running!");
+        }
+    }
+
+    export class Client
+    {
+        public static main()
+        {
+            let chartPort : IPort = new Chat();
+            let serverPort : IPort = new Server();
+            chartPort.net();
+            chartPort.ftp();
+
+            console.log("---------------");
+            serverPort.mysql();
+            serverPort.ssh();
+        }
+    }
+}
+interfaceAdapter.Client.main();
+//Adapter.Client.main();
