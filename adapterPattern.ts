@@ -1,4 +1,5 @@
 /**适配器模式 */
+/**包含了普通的适配器模式和类适配器模式 */
 namespace Adapter 
 {
     abstract class IDuck
@@ -58,6 +59,22 @@ namespace Adapter
         }
     }
 
+    /**类适配器  */
+    class ClsTurkeyAdapter extends WildTurkey implements IDuck
+    {
+        public quack() : void
+        {
+            super.gobble();
+        }
+        public fly() : void
+        {
+            for(let idx : number = 0; idx < 3; ++idx)
+            {
+                super.fly();
+            }
+        }
+    }
+
     export class Client
     {
         public static main()
@@ -69,6 +86,9 @@ namespace Adapter
             Client.testDuck(duck);
             console.log("------------------------");
             Client.testDuck(adapter);
+            console.log("------------------------");
+            let clsAdapter : IDuck = new ClsTurkeyAdapter();
+            Client.testDuck(clsAdapter);
         }
 
         /**该函数需要适配 */
