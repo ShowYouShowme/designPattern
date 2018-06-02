@@ -88,4 +88,61 @@ namespace abstractFactory
     }
 }
 
-abstractFactory.Client.main();
+/**工厂方法 */
+namespace factoryMethod
+{
+    abstract class IMouse
+    {
+
+    }
+
+    class DellMouse
+    {
+        constructor()
+        {
+            console.log("Hi, I am DellMouse"!);
+        }
+    }
+
+    class HpMouse
+    {
+        constructor()
+        {
+            console.log("Hi, i am HpMouse!");
+        }
+    }
+
+    abstract class IMouseFactory
+    {
+        public abstract createMouse() : IMouse;
+    }
+
+    class HpMouseFactory implements IMouseFactory
+    {
+        public createMouse() : IMouse
+        {
+            return new HpMouse();
+        }
+    }
+
+    class DellMouseFactory implements IMouseFactory
+    {
+        public createMouse() : IMouse
+        {
+            return new DellMouse();
+        }
+    }
+
+    export class Client
+    {
+        public static main()
+        {
+            let hpFactory : IMouseFactory = new HpMouseFactory();
+            let dellFactory : IMouseFactory = new DellMouseFactory();
+            hpFactory.createMouse();
+            dellFactory.createMouse();
+        }
+    }
+}
+
+factoryMethod.Client.main();
