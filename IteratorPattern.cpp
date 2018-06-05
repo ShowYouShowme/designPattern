@@ -57,6 +57,7 @@ namespace IteratorPattern
     template<typename T>
     void print(Iterator<T>& it)
     {
+        //一个循环就可以遍历全部的集合
         while (it.hasNext())
         {
             std::cout << it.next() << " ";
