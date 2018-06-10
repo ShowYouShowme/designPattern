@@ -46,17 +46,13 @@ namespace IteratorPattern
         virtual PtrIterator<T> createIterator() = 0;
     };
 
+    //类的方法里面需要将std::shared_ptr<T>(this)传给其他函数用std::enable_shared_from_this
     template<typename T>
-    class ConcreteAggregate : public IAggregate<T>
+    class ConcreteAggregate : public IAggregate<T>, public std::enable_shared_from_this<ConcreteAggregate<T>>
     {
     private:
         //根据std::vector<T>实现,用组合非继承
         std::vector<T> m_vec;
-        PtrConcreteAggregate<T> m_self;
-        void saveSmartPtr(PtrConcreteAggregate<T> ptr)
-        {
-            this->m_self = ptr;
-        }
     public:
         std::size_t size()
         {
@@ -82,13 +78,11 @@ namespace IteratorPattern
         static PtrConcreteAggregate<T> create()
         {
             PtrConcreteAggregate<T> result = std::make_shared<ConcreteAggregate<T>>();
-            result->saveSmartPtr(result);
             return result;
         }
         virtual PtrIterator<T> createIterator() override
         {
-            PtrConcreteIterator<T> result = std::make_shared<ConcreteIterator<T>>(this->m_self);
-            this->m_self.reset();
+            PtrConcreteIterator<T> result = std::make_shared<ConcreteIterator<T>>(this->shared_from_this());
             return result;
         }
     };
